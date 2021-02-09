@@ -2,7 +2,6 @@
 
 const MongoClient = require('mongodb').MongoClient;
 const assert = require('assert');
-
 // Connection URL
 const url = 'mongodb://localhost:27017';
 
@@ -19,13 +18,14 @@ MongoClient.connect(url, function(err, client) {
   const db = client.db(dbName);
 
     insertDocuments(db, function() {
-    client.close();
+    findDocuments(db, function() {
+      client.close();
     });
+  });
 });
-
 const insertDocuments = function(db, callback) {
     // Get the documents collection
-    const collection = db.collection('fruirs');
+    const collection = db.collection('fruits');
     // Insert some documents
     collection.insertMany([
         {
@@ -33,7 +33,6 @@ const insertDocuments = function(db, callback) {
         score:5,
         review:"IT is an ok FRUIT"
         },
-
         {
         name:"Orange",
         score:8,
@@ -51,6 +50,17 @@ const insertDocuments = function(db, callback) {
       console.log("Inserted 3 documents into the collection");
       callback(result);
     });
+}
+const findDocuments = function(db, callback) {
+  // Get the documents collection
+  const collection = db.collection('fruits');
+  // Find some documents
+  collection.find({}).toArray(function(err, fruits) {
+    assert.equal(err, null);
+    console.log("Found the following records");
+    console.log(fruits);
+    callback(fruits);
+  });
 }
 
 
