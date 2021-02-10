@@ -43,9 +43,10 @@ Item.insertMany(defaultItems, function(err){
   }
 });
 app.get("/", function(req, res) {
-
-// const day = date.getDate();
-
+  
+  Item.find({}, function (err, foundItems){
+    console.log(foundItems);
+  });
   res.render("list", {listTitle: "Today", newListItems: items});
 });
 
