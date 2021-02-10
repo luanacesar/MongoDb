@@ -5,42 +5,45 @@ const mongoose = require('mongoose');
 mongoose.connect("mongodb://localhost:27017/fruitsDB", { useNewUrlParser: true });
 
 const fruitSchema = new mongoose.Schema({
-    name: String,
-    rating: Number,
+    name: {
+      type: String,
+      required:[true,"No name is added here"]
+    },
+    rating: {
+      type:Number,
+      min:1,
+      max:10,
+    },
     review: String
 });
-
 const Fruit = mongoose.model("fruit", fruitSchema);
 
-const fruit = new Fruit({
-    name:"Apple",
-    rating:5,
-    review:"Very solid as a fruit."
-});
+    const fruit = new Fruit({
+        name:"Apple",
+        rating:11,
+        review:"Very solid as a fruit."
+    });
+    const kiwi = new Fruit({
+      name:"Kiwi",
+      rating:7,
+      review:"good"
+    })
+    const orange = new Fruit({
+      name:"orange",
+      rating:10,
+      review:"The best fruit"
+    });
+    const banana = new Fruit({
+      name:"banana",
+      rating:9,
+      review:"My second favorite one"
+    });
+    const grape = new Fruit({
+      rating:9,
+      review:"grape are good"
+    });
 
-const kiwi = new Fruit({
-  name:"Kiwi",
-  rating:7,
-  review:"good"
-})
-const orange = new Fruit({
-  name:"orange",
-  rating:10,
-  review:"The best fruit"
-})
-const banana = new Fruit({
-  name:"banana",
-  rating:9,
-  review:"My second favorite one"
-})
 
-// Fruit.insertMany([kiwi,orange, banana], function(err){
-//   if(err){
-//     console.log(err);
-//   }else{
-//     console.log("Succesfully saved all the fruits");
-//   }
-// });
 // fruit.save();
 
 Fruit.find(function(err, fruits){
@@ -50,7 +53,7 @@ Fruit.find(function(err, fruits){
   else{
     mongoose.connection.close();
     fruits.forEach(fruit => {
-      console.log(fruit.name);
+      console.log(fruit.review);
     });
   // fruits.forEach(function (fruit){
   //   console.log(fruit.name);
@@ -58,10 +61,19 @@ Fruit.find(function(err, fruits){
   }
 });
 
+// Fruit.updateOne(
+//   { name:"grape",  }
+// )
 
+// Fruit.deleteOne({name:"kiwi"}, function(err){
+//   if (err){
+//     console.log(err);
+//   }
+//   else{
+//     console.log("Fruit deleted!")}
+// });
 
-
-  const personSchema = new mongoose.Schema({
+   const personSchema = new mongoose.Schema({
   name: String,
   age: Number,
 });
@@ -73,8 +85,25 @@ const person = new Person({
   age:30
 });
 
-person.save();
+// person.save();
 
+// Person.deleteMany({name:"Luana"}, function(err){
+//   if (err){
+//     console.log(err);
+//   }
+//   else{
+//     console.log("Person deleted!")}
+// });
+
+
+
+// Fruit.deleteOne({name:"kiwi"}, function(err){
+//   if (err){
+//     console.log(err);
+//   }
+//   else{
+//     console.log("Fruit deleted!")}
+// });
 const findDocuments = function(db, callback) {
   // Get the documents collection
   const collection = db.collection('fruits');
