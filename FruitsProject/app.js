@@ -95,8 +95,6 @@ const person = new Person({
 //     console.log("Person deleted!")}
 // });
 
-
-
 // Fruit.deleteOne({name:"kiwi"}, function(err){
 //   if (err){
 //     console.log(err);
@@ -104,6 +102,8 @@ const person = new Person({
 //   else{
 //     console.log("Fruit deleted!")}
 // });
+
+
 const findDocuments = function(db, callback) {
   // Get the documents collection
   const collection = db.collection('fruits');
